@@ -4,26 +4,15 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-EMAIL_SETTINGS = {
-    'smtp_server': os.environ.get('SMTP_SERVER'),
-    'port': int(os.environ.get('SMTP_PORT')),
-    'sender': os.environ.get('SMTP_SENDER'),
-    'receiver': os.environ.get('SMTP_RECEIVER'),
-    'password': os.environ.get('SMTP_PASSWORD')
-}
-
-
 class ErrorEmail:
-    def __init__(self, message, name_project = 'No hay nombre del projecto', email_settings = None):
-        if not email_settings:
-            email_settings = EMAIL_SETTINGS
+    def __init__(self, message, email_settings, name_project = 'No hay nombre del projecto'):
         self.msg = MIMEMultipart()
         self.server = smtplib.SMTP_SSL(email_settings['smtp_server'], email_settings['port'])
         self.server.login(email_settings['sender'], email_settings['password'])
         self.message = message
-        self.sender = EMAIL_SETTINGS['sender']
+        self.sender = email_settings['sender']
         self.subject = f'ERROR EN {name_project}'
-        self.receiver = EMAIL_SETTINGS['receiver']
+        self.receiver = email_settings['receiver']
 
     def send(self):
         self.msg['From'] = self.sender
@@ -39,6 +28,10 @@ class CatchErrors:
     def __init__(self, name_project = 'No hay nombre del projecto', email_settings = None):
         self.name_project = name_project
         self.email_settings = email_settings
+        if not self.email_settings:
+            self.email_available = False
+        else:
+            self.email_available = True
 
     def show_error(self, e: Exception, send_email: bool = False)->str:
         import os
@@ -54,6 +47,8 @@ class CatchErrors:
         error = f'ERROR INFO\nTipo: {exc_type}\nArchivo: {file}\nFuncion: {function_data}\nLinea: {exc_tb.tb_lineno}\nError: {e}\nFecha: {now}'
         
         if send_email:
+            if not self.email_available:
+                raise Exception('No hay configuración de email')
             email = ErrorEmail(error, self.name_project, self.email_settings)
             email.send()
         
