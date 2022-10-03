@@ -5,7 +5,7 @@ setup(
     name='ojitos369',
     packages=['ojitos369'], # Mismo nombre que en la estructura de carpetas de arriba
     include_package_data=True,
-    version='0.2',
+    version='0.3',
     license='LGPL v3', # La licencia que tenga tu paquete
     description='Funciones de utilidades de ojitos369',
     author='Ojitos369',
@@ -21,3 +21,7 @@ setup(
         'Programming Language :: Python :: 3.10',
     ],
 )
+"""
+py3 setup.py sdist
+twine upload dist/*
+"""

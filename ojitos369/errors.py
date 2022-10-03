@@ -49,7 +49,7 @@ class CatchErrors:
         if send_email:
             if not self.email_available:
                 raise Exception('No hay configuración de email')
-            email = ErrorEmail(error, self.name_project, self.email_settings)
+            email = ErrorEmail(error, self.email_settings, self.name_project)
             email.send()
         
         return error
