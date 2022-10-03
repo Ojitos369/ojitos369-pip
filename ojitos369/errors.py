@@ -7,7 +7,7 @@ import smtplib
 class ErrorEmail:
     def __init__(self, message, email_settings, name_project = 'No hay nombre del projecto'):
         self.msg = MIMEMultipart()
-        self.server = smtplib.SMTP_SSL(email_settings['smtp_server'], email_settings['port'])
+        self.server = smtplib.SMTP_SSL(email_settings['smtp_server'])
         self.server.login(email_settings['sender'], email_settings['password'])
         self.message = message
         self.sender = email_settings['sender']

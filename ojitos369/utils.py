@@ -9,9 +9,10 @@ def printwln(*args, **kwargs):
     """Print with the origin line number"""
     cf = currentframe()
     line = cf.f_back.f_lineno
-    print(f"{line}: ", *args, **kwargs)
+    print(f"ln {line}: ", *args, **kwargs)
 
-def print_line_center(text: str):
+
+def print_line_center(text: str) -> str:
     print()
     print(text)
     print()
@@ -46,5 +47,5 @@ def get_d(d: dict, key: str, default = None, none = False, to_parse = None) -> a
     elif none:
         return None
     else:
-        raise Exception(f'Error: {key} no existe')
+        raise Exception(f'Error: "{key}" not found')
 
