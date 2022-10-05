@@ -140,11 +140,19 @@ print(get_d(data, 'age'))
 
 ### Databases
 
+* For this you need install ojitos369_db_connections
+
+```py
+pip install ojitos369_db_connections
+```
+[REPO: https://github.com/Ojitos369/ojitos369_db_connections](https://github.com/Ojitos369/ojitos369_db_connections)
+
+
 #### Oracle
 
 ```py
 
-from ojitos369.db_connections import ConexionOracle
+from ojitos369_db_connections.oracle_db import ConexionOracle
 
 db_data = {
     'user': 'your_db_user',
