@@ -41,6 +41,10 @@ class TextFormat:
         return text
     
     def unique_string_no_space(self, items: list) -> str:
+        if type(items) == str:
+            items = items.split()
+        elif type(items) != list:
+            items = [items]
         text = ''
         for item in items:
             if not item:
@@ -62,6 +66,10 @@ class TextFormat:
         return text
     
     def normal_text(self, items: list) -> str:
+        if type(items) == str:
+            items = items.split()
+        elif type(items) != list:
+            items = [items]
         text = ''
         for item in items:
             if not item:
