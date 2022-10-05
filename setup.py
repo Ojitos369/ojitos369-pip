@@ -26,6 +26,7 @@ setup(
     ],
 )
 """
+# pip install setuptools twine
 py3 setup.py sdist
 twine upload dist/*
 """
