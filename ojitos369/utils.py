@@ -42,7 +42,7 @@ def get_d(d: dict, key: str, default = None, none = False, to_parse = None) -> a
         if to_parse:
             return to_parse(d[key])
         return d[key]
-    elif default:
+    elif default != None:
         return default
     elif none:
         return None
