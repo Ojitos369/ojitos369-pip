@@ -38,7 +38,7 @@ def valida_dato(dato: any):
 
 def get_d(d: dict, key: str, default = None, none = False, to_parse = None) -> any:
     """Validate field in dict and return it or a certain value"""
-    if key in d:
+    if key in d and d[key] is not None:
         if to_parse:
             return to_parse(d[key])
         return d[key]
