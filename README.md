@@ -27,8 +27,9 @@ except Exception as e:
 from ojitos369.utils import (
     printwln,
     print_line_center,
-    get_unique_key,
     print_json,
+    print_prev,
+    get_unique_key,
     valida_dato,
     get_d
 )
@@ -71,14 +72,6 @@ print('end')
 
 ```
 
-#### get_unique_key
-```py
-
-# get_unique_key -> get a unique key base on uuid4
-key = get_unique_key()
-# >> key = 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6'
-
-```
 
 #### print_json
 ```py
@@ -90,6 +83,39 @@ print_json({"name": "ojitos369"})
 # >> }
 
 ```
+
+
+#### print_prev
+```py
+
+# print_prev -> print in the previous line
+print_prev("Hello world")
+print_prev("Bye world")
+# Firts
+# >>
+# >> Hello world
+# >>
+
+# Second
+# >>
+# >> Bye world
+# >>
+
+
+
+
+```
+
+
+#### get_unique_key
+```py
+
+# get_unique_key -> get a unique key base on uuid4
+key = get_unique_key()
+# >> key = 'a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6'
+
+```
+
 
 #### valida_dato
 ```py
