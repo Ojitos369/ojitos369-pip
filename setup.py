@@ -5,7 +5,7 @@ setup(
     name='ojitos369',
     packages=['ojitos369'], # Mismo nombre que en la estructura de carpetas de arriba
     include_package_data=True,
-    version='0.9',
+    version='0.11',
     license='LGPL v3', # La licencia que tenga tu paquete
     description='Funciones de utilidades de ojitos369',
     long_description='Funciones de utilidades de ojitos369\nRevizar README en:\nhttps://github.com/Ojitos369/ojitos369-pip',
