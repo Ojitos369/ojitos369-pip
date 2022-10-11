@@ -171,14 +171,14 @@ print(get_d(data, 'age'))
 ```py
 pip install ojitos369_db_connections
 ```
-[REPO: https://github.com/Ojitos369/ojitos369_db_connections](https://github.com/Ojitos369/ojitos369_db_connections)
+[REPO: https://github.com/Ojitos369/ojitos369_oracle_db](https://github.com/Ojitos369/ojitos369_oracle_db)
 
 
 #### Oracle
 
 ```py
 
-from ojitos369_db_connections.oracle_db import ConexionOracle
+from ojitos369_oracle_db.oracle_db import ConexionOracle
 
 db_data = {
     'user': 'your_db_user',
