@@ -166,15 +166,12 @@ print(get_d(data, 'age'))
 
 ### Databases
 
-* For this you need install ojitos369_db_connections
-
+#### Oracle
 ```py
-pip install ojitos369_db_connections
+pip install ojitos369_oracle_db
 ```
 [REPO: https://github.com/Ojitos369/ojitos369_oracle_db](https://github.com/Ojitos369/ojitos369_oracle_db)
 
-
-#### Oracle
 
 ```py
 
@@ -208,5 +205,66 @@ conexion.paginador(query, registros_pagina = 1, pagina = 2, params = None) # ret
 conexion.commit() # commit transaction
 conexion.rollback() # rollback transaction
 conexion.close() # close connection
+
+```
+
+
+### FTP  
+
+```py
+pip install ojitos369_ftp
+```
+[REPO: https://github.com/Ojitos369/ojitos369_ftp](https://github.com/Ojitos369/ojitos369_ftp)
+
+```py
+
+
+from ojitos369_ftp.ftp import ConnectionFtp
+
+ftp_data = {
+    'host': 'your_ftp_host',
+    'port': 'your_ftp_port',
+    'user': 'your_ftp_user',
+    'password': 'your_ftp_password',
+}
+ftp = ConnectionFtp(ftp_data)
+
+ftp.mkdir('some_path')
+ftp.cd('some_path')
+
+ftp.upload('~/files/your.file', '.'): # upload your.file into some_path (ftp)
+ftp.ls()
+# >> ['your.file']
+ftp.cd('..')
+ftp.clear_dir('some_path')
+ftp.ls('some_path')
+# >> []
+
+ftp.rmdir('some_path')
+
+
+ftp.rm('some.file')
+
+ftp.pwd()
+# >> 'actual_ftp_dir
+
+ftp.rename('your.file', 'your_2.file')
+ftp.mv('your.file', 'some_path')
+
+ftp.ls('some_path')
+# >> ['your.file', 'your_2.file']
+ftp.ls('some_path_2')
+# >> []
+
+ftp.mv_files('some_path', 'some_path_2')
+ftp.ls('some_path')
+# >> []
+ftp.ls('some_path_2')
+# >> ['your.file', 'your_2.file']
+
+ftp.cp('some_path/your.file', '~/files/your.file')
+
+ftp.close()
+
 
 ```
