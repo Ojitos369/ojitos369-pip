@@ -8,6 +8,7 @@ email_settings = {
     "port": port_from_your_server,
     "sender": "email_from_by_sender@email.com",
     "receiver": "email_to_recive@email.com",
+    "user": "user_from_your_server",
     "password": "the_sender_password",
 }
 

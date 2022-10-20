@@ -55,3 +55,23 @@ def get_d(d: dict, key: str, default = None, none = False, to_parse = None) -> a
     else:
         raise Exception(f'Error: "{key}" not found')
 
+
+def get_separated_number(n: any) -> str:
+    """Return a separated number string"""
+    try:
+        n = float(n)
+    except:
+        raise Exception('Cannot convert to number')
+    return f'{n:,.2f}'
+
+def get_currency(n: any) -> str:
+    """Return a currency string"""
+    try:
+        n = float(n)
+    except:
+        raise Exception('Cannot convert to number')
+    
+    n_final = round(n, 2)
+    n_final = ('-' if n_final < 0 else '') + f'$ {get_separated_number(abs(n_final))}'
+    return n_final
+
