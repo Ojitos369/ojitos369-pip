@@ -165,6 +165,26 @@ print(get_d(data, 'age'))
 
 ```
 
+
+### Types
+
+```py
+from ojitos369.types import ODict
+my_dict = ODict({
+    "name": "ojitos369",
+    "age": 18
+})
+my_dict.name
+# >> "ojitos369"
+my_dict.age
+# >> 18
+my_dict.city
+# >> 
+my_dict.city.name
+# >>
+})
+```
+
 ### Databases
 
 #### Oracle
