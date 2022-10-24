@@ -64,6 +64,7 @@ def get_separated_number(n: any) -> str:
         raise Exception('Cannot convert to number')
     return f'{n:,.2f}'
 
+
 def get_currency(n: any) -> str:
     """Return a currency string"""
     try:
