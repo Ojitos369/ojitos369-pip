@@ -24,6 +24,15 @@ class OInt(int):
         return value
 
 
+class OFloat(float):
+    def __getattribute__(self, key):
+        try:
+            value = super(OFloat, self).__getattribute__(key)
+        except AttributeError as ae:
+            value = ONone()
+        return value
+
+
 class OString(str):
     def __getattribute__(self, key):
         try:
@@ -56,6 +65,8 @@ class ODict(dict):
     def __setattr__(self, key, value):
         if type(value) is int:
             value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
         elif type(value) is str:
             value = OString(value)
         elif type(value) is list:
@@ -73,6 +84,8 @@ class OList(list):
             value = ONone()
         if type(value) is int:
             value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
         elif type(value) is str:
             value = OString(value)
         elif type(value) is list:
@@ -88,6 +101,8 @@ class OList(list):
             value = ONone()
         if type(value) is int:
             value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
         elif type(value) is str:
             value = OString(value)
         elif type(value) is list:
@@ -99,6 +114,8 @@ class OList(list):
     def __setattr__(self, key, value):
         if type(value) is int:
             value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
         elif type(value) is str:
             value = OString(value)
         elif type(value) is list:
