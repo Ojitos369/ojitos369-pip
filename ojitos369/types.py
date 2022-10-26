@@ -1,3 +1,4 @@
+import uuid
 class ONone:
     def __getattribute__(self, *args, **kwargs):
         return ONone()
@@ -43,32 +44,67 @@ class OString(str):
 
 
 class ODict(dict):
+    __helper__ = {}
+    
     def __init__(self, d: dict = {}, **kwargs):
+        unique_key = str(uuid.uuid4())
+        self.__helper__[unique_key] = {}
+        self.__unique_key__ = unique_key
         for key, value in d.items():
             setattr(self, key, value)
         for key, value in kwargs.items():
             setattr(self, key, value)
+    
+    def __to_dict__(self):
+        me = self.__dict__
+        h = self.__helper__[self.__unique_key__]
+        sum = {}
+        sum.update(me)
+        sum.update(h)
+        del sum['__unique_key__']
+        return sum
+    
+    def dict(self):
+        from ast import literal_eval
+        mystr = str(self)
+        this_dict = literal_eval(mystr)
+        return this_dict
+        
 
     def __str__(self):
-        return str(self.__dict__)
+        return str(self.__to_dict__())
 
     def __repr__(self):
-        return str(self.__dict__)
+        return str(self.__to_dict__())
 
     def __getattribute__(self, key):
         try:
             value = super(ODict, self).__getattribute__(key)
         except AttributeError as ae:
-            value = ODict()
-            self.__setattr__(key, value)
+            try:
+                value = self.__helper__[self.__unique_key__][key]
+            except:
+                value = ODict()
+                self.__setattr__(key, value)
         return value
     
     def __bool__(self):
-        if len(self.__dict__) == 0:
+        if len(self.__to_dict__()) == 0:
             return False
         return True
 
     def __setattr__(self, key, value):
+        number = False
+        try:
+            r = float(key)
+            number = True
+        except:
+            pass
+        
+        if number:
+            self.__helper__[self.__unique_key__][key] = value
+            return
+        
         if type(value) is int:
             value = OInt(value)
         elif type(value) is float:
@@ -80,6 +116,13 @@ class ODict(dict):
         elif type(value) is dict:
             value = ODict(value)
         super(ODict, self).__setattr__(key, value)
+    
+    def keys(self):
+        return self.__to_dict__().keys()
+    
+    def update(self, d: dict):
+        for key, value in d.items():
+            self.__setattr__(key, value)
 
 
 class OList(list):
