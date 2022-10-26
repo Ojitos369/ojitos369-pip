@@ -169,20 +169,33 @@ print(get_d(data, 'age'))
 ### Types
 
 ```py
-from ojitos369.types import ODict
-my_dict = ODict({
-    "name": "ojitos369",
-    "age": 18
-})
-my_dict.name
-# >> "ojitos369"
-my_dict.age
-# >> 18
-my_dict.city
-# >> 
-my_dict.city.name
-# >>
-})
+from ojitos369.types import ODict as OD
+d = OD()
+d
+# >> d: {}
+d.o.j.o
+# >> d.o.j.o: {}
+if d.o.j.o:
+    print('d.o.j.o is True')
+else:
+    print('d.o.j.o is False')
+# >> d.o.j.o is False
+d
+# >> d: {'o': {'j': {'o': {}}}}
+
+d.o.j.o = 'hola'
+d.o.j.o
+# >> d.o.j.o: hola
+
+if d.o.j.o:
+    print('d.o.j.o is True')
+else:
+    print('d.o.j.o is False')
+# >> d.o.j.o is True
+d.o.j.d = 'adios'
+
+d
+d: {'o': {'j': {'o': 'hola', 'd': 'adios'}}}
 ```
 
 ### Databases

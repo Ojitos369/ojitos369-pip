@@ -43,7 +43,7 @@ class OString(str):
 
 
 class ODict(dict):
-    def __init__(self, d: dict, **kwargs):
+    def __init__(self, d: dict = {}, **kwargs):
         for key, value in d.items():
             setattr(self, key, value)
         for key, value in kwargs.items():
@@ -59,8 +59,14 @@ class ODict(dict):
         try:
             value = super(ODict, self).__getattribute__(key)
         except AttributeError as ae:
-            value = ONone()
+            value = ODict()
+            self.__setattr__(key, value)
         return value
+    
+    def __bool__(self):
+        if len(self.__dict__) == 0:
+            return False
+        return True
 
     def __setattr__(self, key, value):
         if type(value) is int:
@@ -111,6 +117,45 @@ class OList(list):
             value = ODict(value)
         return value
 
+    def append(self, value):
+        if type(value) is int:
+            value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
+        elif type(value) is str:
+            value = OString(value)
+        elif type(value) is list:
+            value = OList(value)
+        elif type(value) is dict:
+            value = ODict(value)
+        super(OList, self).append(value)
+    
+    def insert(self, index, value):
+        if type(value) is int:
+            value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
+        elif type(value) is str:
+            value = OString(value)
+        elif type(value) is list:
+            value = OList(value)
+        elif type(value) is dict:
+            value = ODict(value)
+        super(OList, self).insert(index, value)
+
+    def __setitem__(self, key, value):
+        if type(value) is int:
+            value = OInt(value)
+        elif type(value) is float:
+            value = OFloat(value)
+        elif type(value) is str:
+            value = OString(value)
+        elif type(value) is list:
+            value = OList(value)
+        elif type(value) is dict:
+            value = ODict(value)
+        super(OList, self).__setitem__(key, value)
+
     def __setattr__(self, key, value):
         if type(value) is int:
             value = OInt(value)
@@ -122,4 +167,5 @@ class OList(list):
             value = OList(value)
         elif type(value) is dict:
             value = ODict(value)
-        super(ODict, self).__setattr__(key, value)
+        super(OList, self).__setattr__(key, value)
+

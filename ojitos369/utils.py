@@ -58,6 +58,7 @@ def get_d(d: dict, key: str, default = None, none = False, to_parse = None) -> a
 
 def get_separated_number(n: any) -> str:
     """Return a separated number string"""
+    n = str(n).replace(' ', '')
     try:
         n = float(n)
     except:
@@ -67,6 +68,7 @@ def get_separated_number(n: any) -> str:
 
 def get_currency(n: any) -> str:
     """Return a currency string"""
+    n = str(n).replace(' ', '')
     try:
         n = float(n)
     except:
