@@ -64,12 +64,21 @@ class ODict(dict):
         del sum['__unique_key__']
         return sum
     
-    def dict(self):
-        from ast import literal_eval
-        mystr = str(self)
-        this_dict = literal_eval(mystr)
-        return this_dict
-        
+    def __add__(self, val):
+        r_val = None
+        try:
+            r_val = self.__to_dict__() + val
+        except:
+            r_val = val
+        return r_val
+
+    def __sub__(self, val):
+        r_val = None
+        try:
+            r_val = self.__to_dict__() - val
+        except:
+            r_val = -val
+        return r_val
 
     def __str__(self):
         return str(self.__to_dict__())
@@ -123,6 +132,12 @@ class ODict(dict):
     def update(self, d: dict):
         for key, value in d.items():
             self.__setattr__(key, value)
+    
+    def dict(self):
+        from ast import literal_eval
+        mystr = str(self)
+        this_dict = literal_eval(mystr)
+        return this_dict
 
 
 class OList(list):
