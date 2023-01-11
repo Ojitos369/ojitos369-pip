@@ -16,7 +16,7 @@ setup(
     classifiers=[],
 )
 """
-# pip install setuptools twine
+# sudo pip install setuptools twine
 py3 setup.py sdist
 twine upload dist/*
 """
