@@ -1,4 +1,6 @@
 import uuid
+
+
 class ONone:
     def __getattribute__(self, *args, **kwargs):
         return ONone()
@@ -45,7 +47,7 @@ class OString(str):
 
 class ODict(dict):
     __helper__ = {}
-    
+
     def __init__(self, d: dict = {}, **kwargs):
         unique_key = str(uuid.uuid4())
         self.__helper__[unique_key] = {}
@@ -54,7 +56,7 @@ class ODict(dict):
             setattr(self, key, value)
         for key, value in kwargs.items():
             setattr(self, key, value)
-    
+
     def __to_dict__(self):
         me = self.__dict__
         h = self.__helper__[self.__unique_key__]
@@ -63,7 +65,7 @@ class ODict(dict):
         sum.update(h)
         del sum['__unique_key__']
         return sum
-    
+
     def __add__(self, val):
         r_val = None
         try:
@@ -96,7 +98,7 @@ class ODict(dict):
                 value = ODict()
                 self.__setattr__(key, value)
         return value
-    
+
     def __bool__(self):
         if len(self.__to_dict__()) == 0:
             return False
@@ -109,11 +111,11 @@ class ODict(dict):
             number = True
         except:
             pass
-        
+
         if number:
             self.__helper__[self.__unique_key__][key] = value
             return
-        
+
         if type(value) is int:
             value = OInt(value)
         elif type(value) is float:
@@ -125,14 +127,14 @@ class ODict(dict):
         elif type(value) is dict:
             value = ODict(value)
         super(ODict, self).__setattr__(key, value)
-    
+
     def keys(self):
         return self.__to_dict__().keys()
-    
+
     def update(self, d: dict):
         for key, value in d.items():
             self.__setattr__(key, value)
-    
+
     def dict(self):
         from ast import literal_eval
         mystr = str(self)
@@ -187,7 +189,7 @@ class OList(list):
         elif type(value) is dict:
             value = ODict(value)
         super(OList, self).append(value)
-    
+
     def insert(self, index, value):
         if type(value) is int:
             value = OInt(value)
@@ -226,4 +228,3 @@ class OList(list):
         elif type(value) is dict:
             value = ODict(value)
         super(OList, self).__setattr__(key, value)
-

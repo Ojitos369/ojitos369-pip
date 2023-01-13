@@ -5,7 +5,7 @@ import smtplib
 
 
 class ErrorEmail:
-    def __init__(self, message, email_settings, name_project = 'No hay nombre del projecto'):
+    def __init__(self, message, email_settings, name_project='No hay nombre del projecto'):
         self.msg = MIMEMultipart()
         self.server = smtplib.SMTP_SSL(email_settings['smtp_server'])
         self.server.login(email_settings['user'], email_settings['password'])
@@ -19,13 +19,14 @@ class ErrorEmail:
         self.msg['Subject'] = self.subject
         self.msg['To'] = self.receiver
         self.msg.attach(MIMEText(self.message, 'plain'))
-        self.server.sendmail(self.msg['From'], self.msg['To'], self.msg.as_string())
+        self.server.sendmail(
+            self.msg['From'], self.msg['To'], self.msg.as_string())
         self.server.quit()
 
 
 class CatchErrors:
-    
-    def __init__(self, name_project = 'No hay nombre del projecto', email_settings = None):
+
+    def __init__(self, name_project='No hay nombre del projecto', email_settings=None):
         self.name_project = name_project
         self.email_settings = email_settings
         if not self.email_settings:
@@ -33,10 +34,10 @@ class CatchErrors:
         else:
             self.email_available = True
 
-    def show_error(self, e: Exception, send_email: bool = False)->str:
+    def show_error(self, e: Exception, send_email: bool = False) -> str:
         import os
         import datetime
-        
+
         com_path = ''
         now = datetime.datetime.now()
         now = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -49,7 +50,7 @@ class CatchErrors:
         max_len = 0
         max_file = 0
         max_func = 0
-        while(et):
+        while (et):
             file = et.tb_frame.f_code.co_filename
             line = et.tb_lineno
             function_data = str(et.tb_frame).split()
@@ -66,9 +67,9 @@ class CatchErrors:
                     aft = Lines[line].replace('\n', '')
                 except:
                     aft = ''
-                codes.append(f'{line - 1}: {ant}\n{line}: {code_text}\n{line + 1}: {aft}')
-                
-            
+                codes.append(
+                    f'{line - 1}: {ant}\n{line}: {code_text}\n{line + 1}: {aft}')
+
             # Validate root path
             p = file.split('/')[:-1]
             ac_path = '/'.join(p)
@@ -79,14 +80,14 @@ class CatchErrors:
                 paths.append(ac_path)
                 ant = com_path.split('/')
                 new = []
-                for a, b in zip(p,ant):
+                for a, b in zip(p, ant):
                     if a != b:
                         break
                     else:
                         new.append(a)
                 com_path = '/'.join(new)
-            
-            code_text = code_text.replace('\n','')
+
+            code_text = code_text.replace('\n', '')
             max_len = max(len(code_text), max_len)
             max_file = max(len(file), max_file)
             max_func = max(len(function_data), max_func)
@@ -103,9 +104,10 @@ class CatchErrors:
             p = p.replace(com_path + '/', '')
             if i > 0:
                 row[len(row) - 1] = codes[i-1]
-                tb += 'file: {}\tline: {}\tfunc: {}\tcode: \n{}\n\n'.format(p, *row)
+                tb += 'file: {}\tline: {}\tfunc: {}\tcode: \n{}\n\n'.format(
+                    p, *row)
             else:
-                tb  += '\n'
+                tb += '\n'
             i += 1
 
         error = f'ERROR INFO\nTipo: {et}\n{tb}\nError: {e}\nFecha: {now}'
@@ -117,5 +119,5 @@ class CatchErrors:
                 email.send()
             except:
                 raise Exception('Revise los datos del email')
-        
+
         return error
