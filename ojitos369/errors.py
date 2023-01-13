@@ -110,7 +110,7 @@ class CatchErrors:
                 tb += '\n'
             i += 1
 
-        error = f'ERROR INFO\nTipo: {et}\n{tb}\nError: {e}\nFecha: {now}'
+        error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError: {e}\nFecha: {now}'
         if send_email:
             if not self.email_available:
                 raise Exception('No hay configuración de email')
