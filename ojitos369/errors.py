@@ -25,20 +25,25 @@ class ErrorEmail:
 
 
 class CatchErrors:
-
-    def __init__(self, name_project='No hay nombre del projecto', email_settings=None):
+    def __init__(self, name_project: str = 'No hay nombre del projecto', email_settings: dict = None, root_path: str = None):
         self.name_project = name_project
         self.email_settings = email_settings
+        self.root_path = str(root_path)
         if not self.email_settings:
             self.email_available = False
         else:
             self.email_available = True
 
-    def show_error(self, e: Exception, send_email: bool = False) -> str:
+    def show_error(self, e: Exception, send_email: bool = False, root_path: str = None) -> str:
         import os
         import datetime
+        if root_path:
+            self.root_path = str(root_path)
 
-        com_path = ''
+        com_path = '' if not self.root_path else self.root_path
+        if com_path.endswith('/'):
+            com_path = com_path[:-1]
+
         now = datetime.datetime.now()
         now = now.strftime("%d/%m/%Y %H:%M:%S")
         info_exc = os.sys.exc_info()
@@ -73,19 +78,20 @@ class CatchErrors:
             # Validate root path
             p = file.split('/')[:-1]
             ac_path = '/'.join(p)
-            if not com_path:
-                com_path = ac_path
+            if not self.root_path:
+                if not com_path:
+                    com_path = ac_path
 
-            if ac_path != com_path and ac_path not in paths:
-                paths.append(ac_path)
-                ant = com_path.split('/')
-                new = []
-                for a, b in zip(p, ant):
-                    if a != b:
-                        break
-                    else:
-                        new.append(a)
-                com_path = '/'.join(new)
+                if ac_path != com_path and ac_path not in paths:
+                    paths.append(ac_path)
+                    ant = com_path.split('/')
+                    new = []
+                    for a, b in zip(p, ant):
+                        if a != b:
+                            break
+                        else:
+                            new.append(a)
+                    com_path = '/'.join(new)
 
             code_text = code_text.replace('\n', '')
             max_len = max(len(code_text), max_len)
