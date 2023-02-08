@@ -78,3 +78,41 @@ def get_currency(n: any) -> str:
     n_final = ('-' if n_final < 0 else '') + \
         f'$ {get_separated_number(abs(n_final))}'
     return n_final
+
+
+def destructure_d(*args, **kwargs):
+    """get value from names varialbes if exist in dictionary else get None
+    Args: 
+        1.- position de dict to get values
+        2.- a list with variables names or values separated with ,
+    
+    Examples:
+        d_1 = {'a':1,'b':2,'c':3,'d':4,'e':5}
+        a,b,g,c = destructure_d(d_1, 'a','b','g','c')
+        a >> 1
+        b >> 2
+        g >> None
+        c >> 3
+
+        a,e,d1,d2 = destructure_d(d_1, ['a','e','d1','d2'])
+        a >> 1
+        e >> 5
+        d1 >> None
+        d2 >> None
+    """
+    args = list(args)
+    the_dict = args.pop(0)
+    
+    values = []
+    if type(args[0]) == list:
+        for key in args[0]:
+            values.append(get_d(the_dict, key, none=True))
+    else:
+        for key in args:
+            values.append(get_d(the_dict, key, none=True))
+    return values
+
+
+
+
+
