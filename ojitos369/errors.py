@@ -119,11 +119,11 @@ class CatchErrors:
         error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError: {e}\nFecha: {now}'
         if send_email:
             if not self.email_available:
-                raise Exception('No hay configuración de email')
+                return 'No hay configuración de email'
             email = ErrorEmail(error, self.email_settings, self.name_project)
             try:
                 email.send()
             except:
-                raise Exception('Revise los datos del email')
+                return 'Revise los datos del email'
 
         return error

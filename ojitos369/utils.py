@@ -42,14 +42,17 @@ def valida_dato(dato: any):
         return dato
 
 
-def get_d(d: dict, key: str, default=None, none=False, to_parse=None) -> any:
+def get_d(d: dict, key: str, none=False, to_parse=None, *args, **kwargs) -> any:
     """Validate field in dict and return it or a certain value"""
     if key in d and d[key] is not None:
         if to_parse:
-            return to_parse(d[key])
+            try:
+                return to_parse(d[key])
+            except:
+                return d[key]
         return d[key]
-    elif default != None:
-        return default
+    elif 'default' in kwargs:
+        return kwargs['default']
     elif none:
         return None
     else:
