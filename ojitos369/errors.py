@@ -97,7 +97,7 @@ class CatchErrors:
             max_len = max(len(code_text), max_len)
             max_file = max(len(file), max_file)
             max_func = max(len(function_data), max_func)
-            errs.append([file, line, function_data, code_text])
+            errs.append([f'{file}:{line}', line, function_data, code_text])
             et = et.tb_next
 
         traceback = ''

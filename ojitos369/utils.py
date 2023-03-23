@@ -109,10 +109,10 @@ def destructure_d(*args, **kwargs):
     values = []
     if type(args[0]) == list:
         for key in args[0]:
-            values.append(get_d(the_dict, key, none=True))
+            values.append(get_d(the_dict, key, default=None))
     else:
         for key in args:
-            values.append(get_d(the_dict, key, none=True))
+            values.append(get_d(the_dict, key, default=None))
     return values
 
 
