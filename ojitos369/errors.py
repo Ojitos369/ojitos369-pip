@@ -34,7 +34,7 @@ class CatchErrors:
         else:
             self.email_available = True
 
-    def show_error(self, e: Exception, send_email: bool = False, root_path: str = None) -> str:
+    def show_error(self, e: Exception, send_email: bool = False, root_path: str = None, extra: str = '') -> str:
         import os
         import datetime
         if root_path:
@@ -116,7 +116,8 @@ class CatchErrors:
                 tb += '\n'
             i += 1
 
-        error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError: {e}\nFecha: {now}'
+        extra = f'Extra: {extra}\n' if extra else ''
+        error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError: {e}\n{extra}Fecha: {now}'
         if send_email:
             if not self.email_available:
                 return 'No hay configuración de email'
