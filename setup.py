@@ -6,7 +6,7 @@ setup(
     # Mismo nombre que en la estructura de carpetas de arriba
     packages=['ojitos369'],
     include_package_data=True,
-    version='0.28',
+    version='0.29',
     license='LGPL v3',  # La licencia que tenga tu paquete
     description='Funciones de utilidades de ojitos369',
     long_description='Funciones de utilidades de ojitos369\nRevizar README en:\nhttps://github.com/Ojitos369/ojitos369-pip',
@@ -19,6 +19,6 @@ setup(
 )
 """
 # sudo pip install setuptools twine
-py3 setup.py sdist
+py setup.py sdist
 twine upload dist/*
 """

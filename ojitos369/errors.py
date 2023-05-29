@@ -60,6 +60,13 @@ class CatchErrors:
             line = et.tb_lineno
             function_data = str(et.tb_frame).split()
             function_data = function_data[-1][:-1]
+            
+            class_data = et.tb_frame.f_locals
+            class_data = class_data['self'] if 'self' in class_data else ''
+            if class_data:
+                class_data = str(class_data.__class__)
+                class_data = class_data.split("'")[1]
+
             code = ''
             with open(file, 'r') as f:
                 Lines = f.readlines()
@@ -97,7 +104,7 @@ class CatchErrors:
             max_len = max(len(code_text), max_len)
             max_file = max(len(file), max_file)
             max_func = max(len(function_data), max_func)
-            errs.append([f'{file}:{line}', line, function_data, code_text])
+            errs.append([f'{file}:{line}', class_data, function_data, code_text])
             et = et.tb_next
 
         traceback = ''
@@ -110,7 +117,7 @@ class CatchErrors:
             p = p.replace(com_path + '/', '')
             if i > 0:
                 row[len(row) - 1] = codes[i-1]
-                tb += 'file: {}\tline: {}\tfunc: {}\tcode: \n{}\n\n'.format(
+                tb += 'file: {}\tclass: {}\tfunc: {}\tcode: \n{}\n\n'.format(
                     p, *row)
             else:
                 tb += '\n'
