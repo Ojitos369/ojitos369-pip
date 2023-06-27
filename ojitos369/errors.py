@@ -67,20 +67,26 @@ class CatchErrors:
                 class_data = str(class_data.__class__)
                 class_data = class_data.split("'")[1]
 
-            code = ''
-            with open(file, 'r') as f:
-                Lines = f.readlines()
-                code_text = Lines[line - 1].replace('\n', '')
-                try:
-                    ant = Lines[line - 2].replace('\n', '')
-                except:
-                    ant = ''
-                try:
-                    aft = Lines[line].replace('\n', '')
-                except:
-                    aft = ''
-                codes.append(
-                    f'{line - 1}: {ant}\n{line}: {code_text}\n{line + 1}: {aft}')
+            code_text = ''
+            ant = ''
+            aft = ''
+            try:
+                with open(file, 'r') as f:
+                    Lines = f.readlines()
+                    code_text = Lines[line - 1].replace('\n', '')
+                    try:
+                        ant = Lines[line - 2].replace('\n', '')
+                    except:
+                        ant = ''
+                    try:
+                        aft = Lines[line].replace('\n', '')
+                    except:
+                        aft = ''
+            except:
+                pass
+            
+            codes.append(
+                f'{line - 1}: {ant}\n{line}: {code_text}\n{line + 1}: {aft}')
 
             # Validate root path
             p = file.split('/')[:-1]
