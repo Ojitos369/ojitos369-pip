@@ -25,7 +25,7 @@ class ErrorEmail:
 
 
 class CatchErrors:
-    def __init__(self, name_project: str = 'No hay nombre del projecto', email_settings: dict = None, root_path: str = None):
+    def __init__(self, name_project: str = '', email_settings: dict = None, root_path: str = None):
         self.name_project = name_project
         self.email_settings = email_settings
         self.root_path = str(root_path)
