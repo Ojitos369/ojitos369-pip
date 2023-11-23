@@ -46,6 +46,7 @@ class CatchErrors:
 
         now = datetime.datetime.now()
         now = now.strftime("%d/%m/%Y %H:%M:%S")
+        error_class = e.__class__.__name__
         info_exc = os.sys.exc_info()
         et, eo, et = info_exc
         errs = []
@@ -130,7 +131,7 @@ class CatchErrors:
             i += 1
 
         extra = f'Extra: {extra}\n' if extra else ''
-        error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError: {e}\n{extra}Fecha: {now}'
+        error = f'ERROR INFO\nTipo: {et}\nCommon Path: {com_path}\n{tb}\nError ({error_class}): {e}\n{extra}Fecha: {now}'
         if send_email:
             if not self.email_available:
                 return 'No hay configuración de email'
