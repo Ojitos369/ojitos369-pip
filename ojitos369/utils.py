@@ -1,5 +1,7 @@
 import uuid
 import json
+import datetime
+import functools
 from inspect import currentframe
 
 
@@ -150,5 +152,27 @@ def generate_token(length: int = 225, exclude: list = []) -> str:
         token += random.choice(options)
     # pln(token)
     return token
+
+
+@functools.lru_cache()
+def str_to_date(date_str: str) -> datetime.datetime:
+    if not date_str:
+        return None
+    # Convertir fecha en formato ISO 8601 a un formato legible por datetime.datetime.strptime
+    if date_str.endswith("Z"):
+        date_str = date_str[:-1] + "+00:00"
+    date_str = date_str.replace("T", " ")
+    formats = [
+        "%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d",
+        "%d/%m/%Y %H:%M:%S", "%d/%m/%Y %H:%M", "%d/%m/%Y",
+        "%Y/%m/%d %H:%M:%S", "%Y/%m/%d %H:%M", "%Y/%m/%d",
+        "%d-%m-%Y %H:%M:%S", "%d-%m-%Y %H:%M", "%d-%m-%Y",
+    ]
+    for fmt in formats:
+        try:
+            return datetime.datetime.strptime(date_str, fmt)
+        except ValueError:
+            pass
+    raise ValueError("No se pudo convertir la fecha")
 
 
