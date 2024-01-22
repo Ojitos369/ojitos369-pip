@@ -20,6 +20,23 @@ try:
 except Exception as e:
     ce.show_error(e, send_email = True)
 
+from ojitos369.errors import TryIt as TI, MYE
+ti = TI(ce=ce)
+
+# @ti.try_it or @ti.tt
+@ti.tt
+def my_func(option):
+    if option == 1:
+        raise Exception("Error 1")
+        # Send email if is configured
+    elif option == 2:
+        raise MYE("Error 2")
+        # Don't send email
+    else:
+        1 / 0
+        # Send email if is configured
+
+
 ```
 
 ### Utils

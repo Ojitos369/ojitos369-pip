@@ -3,6 +3,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
 
+from .utils import print_line_center
+
+class MYE(Exception):
+    pass
+
 
 class ErrorEmail:
     def __init__(self, message, email_settings, name_project='No hay nombre del projecto'):
@@ -142,3 +147,34 @@ class CatchErrors:
                 return 'Revise los datos del email'
 
         return error
+
+
+class TryIt:
+    def __init__(self, **kwargs):
+        self.MYE = MYE
+        self.ce = CatchErrors()
+        self.send_email = None
+        self.print_error = True
+
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+        
+        self.try_it = self.tt
+
+    def tt(self, func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except MYE as e:
+                error = self.ce.show_error(e)
+                if self.print_error:
+                    print_line_center(error)
+                return e
+            except Exception as e:
+                error = self.ce.show_error(e, send_email=self.send_email)
+                if self.print_error:
+                    print_line_center(error)
+                return e
+
+        return wrapper
+
