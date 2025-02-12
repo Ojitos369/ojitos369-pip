@@ -22,10 +22,13 @@ class ErrorEmail:
     def send(self):
         self.msg['From'] = self.sender
         self.msg['Subject'] = self.subject
-        self.msg['To'] = self.receiver
+        if type(self.receiver) == str:
+            self.receiver = self.receiver.replace(", ", ",").split(",")
+        self.msg['To'] = ', '.join(self.receiver)
+
         self.msg.attach(MIMEText(self.message, 'plain'))
         self.server.sendmail(
-            self.msg['From'], self.msg['To'], self.msg.as_string())
+            self.msg['From'], self.receiver, self.msg.as_string())
         self.server.quit()
 
 
